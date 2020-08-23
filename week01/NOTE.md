@@ -40,10 +40,12 @@
 ```python
 class <Example>Spider(scrapy.Spider):
     name = '<example>'
-    allowed_domains = ['<example>.com']
-    start_urls = ['<example>.com']
     # name: 你之前定义的爬虫项目模板的名称，不用改
+
+    allowed_domains = ['<example>.com']
     # allowed_domains: 设置爬虫的域名范围，防止自动爬到了别的网站
+
+    start_urls = ['<example>.com']
     # start_urls: 设置第一次爬的 url，获取头部信息
 ```
 
@@ -100,7 +102,7 @@ def start_requests(self):
 # 导入你之前设置好的 <Spiders>Item
 from <spiders>.items import <Spiders>Item
 
-# 当你选择用 Xpath 解析时，导入 scrapy 的 Selector
+# 当你选择用 Xpath 解析时，可以使用 scrapy 内置的 Selector
 # Selector 用法举例：
 # <info_1> = Selector(response=response).xpath('your_xpath')
 from scrapy.selector import Selector
@@ -111,7 +113,7 @@ def parse(self, response):
    # 创建空 item
 
    <info_1> = fake_code_to_get_<info_1>
-   # 使用 BeautifulSoup 或 Xpath 解析，假设这里得到了 <info_1>，假设它是第二层解析函数要用到的 url
+   # 解析网页，假设这里得到了 <info_1>，假设它是第二层解析函数要用到的 url
 
    item['<info_1>'] = <info_1>
    # 将 <info_1> 保存进 item
@@ -123,7 +125,7 @@ def parse(self, response):
 ```python
 def parse2(self, response):
    <info_2> = fake_code_to_get_<info_2>
-   # 使用 BeautifulSoup 或 Xpath 解析，假设这里得到了 <info_2>
+   # 解析网页，假设这里得到了 <info_2>
 
    item['<info_2>'] = <info_2>
    # 将 <info_2> 保存进 item
