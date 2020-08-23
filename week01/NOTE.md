@@ -11,14 +11,14 @@ pip install scrapy
 
 ### 2. 创建项目
 #### 2.1 创建新项目<spiders>
-`scrapy startproject spiders`
+`scrapy startproject <spiders>`
 
 #### 2.2 进入包含各组件的 .py 文件的 <spiders> 文件夹
-`cd spiders\spiders`
+`cd <spiders>\<spiders>`
 
 #### 2.3 创建新的 spider 模板
 模板包括名称<example>和要爬的域名<example.com>  
-`scrapy genspider example example.com`
+`scrapy genspider <example> <example.com>`
 
 ### 3. 写爬虫函数 
 #### 3.1 一些基本参数的设定
