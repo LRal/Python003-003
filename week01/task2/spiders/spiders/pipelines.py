@@ -13,7 +13,7 @@ class SpidersPipeline:
         title = item['title']
         genre = item['genre']
         release_date = item['release_date']
-        output = f'|{title}|\t|{genre}|\t|{release_date}|\n\n'
+        output = f'|{title}| |{genre}| |{release_date}|\n'
 
         with open('./movie_info.csv', 'a+', encoding='gbk') as article:
             article.write(output)
