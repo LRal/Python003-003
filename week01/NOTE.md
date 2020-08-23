@@ -59,7 +59,7 @@ ITEM_PIPELINES = {
 ```
 
 #### 3.2 开始爬虫
-> 位置： \<spiders\>/\<spiders\>/spiders/example.py  
+> 位置： \<spiders\>/\<spiders\>/spiders/<example>.py  
 > 各层解析的最终目标是返回一个字典类型的 item
 ##### 3.2.1 初次请求（第零层）函数 start_requests()
 ```python
