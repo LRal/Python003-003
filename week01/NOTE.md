@@ -37,7 +37,7 @@ class <Example>Spider(scrapy.Spider):
 ##### 3.1.2 设置 items.py
 > 位置： <spiders\>/<spiders\>/items.py  
 ```python
-class MoviesItem(scrapy.Item):
+class <Spiders>Item(scrapy.Item):
     # 按以下格式定义你要爬取的信息标题:
     # name = scrapy.Field()
     <info_1> = scrapy.Field()
@@ -47,11 +47,15 @@ class MoviesItem(scrapy.Item):
 ##### 3.1.3 设置 settings.py
 > 位置：<spiders\>/<spiders\>/settings.py  
 ```python
-# 在 settings.py 中某些代码行默认被注释，只要把注释号去掉就行
+# 在 settings.py 中有一些必要的代码行默认被注释，只要把注释号去掉就行
 # Scrapy 会在初次请求自动获得 USER_AGENT
 USER_AGENT = '<spiders> (+http://www.yourdomain.com)'
 # 设置下载间隔（默认为3）
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 3
+# 启用 Item Pipeline 组件，数字范围 0-1000，数值越低，组件的优先级越高
+ITEM_PIPELINES = {
+    'spiders.pipelines.SpidersPipeline': 300,
+}
 ```
 
 #### 3.2 开始爬虫
@@ -66,19 +70,24 @@ def start_requests(self):
    # 写出初始 url 或 url 列表
 
    yield scrapy.Request(url=url, callback=self.parse)
-   # callback 负责将写好的 url 发给第一层解析函数
+   # callback 负责将写好的 url 发给下一层解析函数
    # 这里可以使用callback指定新的函数，而非默认的 parse
 ```
 
 ##### 3.2.2 第一层解析函数 parse() 
 ```python
-# 导入你之前设置好的 items 的 info 参数
+# 导入你之前设置好的 <Spiders>Item
 from <spiders>.items import <Spiders>Item
+
+# 当你选择用 Xpath 解析时，导入 scrapy 的 Selector
+# Selector 用法举例：
+# <info_1> = Selector(response=response).xpath('your_xpath')
+from scrapy.selector import Selector
 
 # 第一层解析函数用于获取下一层要解析的 url 和 item 的部分 info，后面的解析函数依次类推
 def parse(self, response):
-   item = []
-   # 创建空字典 item
+   item = <Spiders>Item()
+   # 创建空 item
 
    <info_1> = fake_code_to_get_<info_1>
    # 使用 BeautifulSoup 或 Xpath 解析，假设这里得到了 <info_1>，假设它是第二层解析函数要用到的 url
@@ -109,7 +118,7 @@ class SpidersPipeline:
       <info_2> = item['info_2']
 
       # 保存方式（以 with 语句为例）
-      output = f'|{title}|\t|{link}|\t|{content}|\n\n'
+      output = f'|{<info_1>}|\t|{<info_2>}|\n'
       with open('./info.txt', 'a+', encoding='gbk') as article:
          article.write(output)
       return item
@@ -119,4 +128,5 @@ class SpidersPipeline:
 > 位置： <spiders\>  
 `scrapy crawl <example>`
 
+---
 [scrapy_url]: https://camo.githubusercontent.com/e0898bedcb0e4d064876c5d4930edc62d6fd0de8/68747470733a2f2f646f63732e7363726170792e6f72672f656e2f6c61746573742f5f696d616765732f7363726170795f6172636869746563747572655f30322e706e67
