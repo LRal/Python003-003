@@ -1,6 +1,6 @@
 import scrapy
-from spiders.items import SpidersItem
 from scrapy.selector import Selector
+from spiders.items import SpidersItem
 
 class MaoyanSpider(scrapy.Spider):
     name = 'maoyan'
@@ -13,10 +13,9 @@ class MaoyanSpider(scrapy.Spider):
 
     def parse(self, response):
         movies_info = Selector(response=response).xpath('//div[@class="movie-hover-info"]')[:10]
-        for movie in movies_info:
-            movie_info = movie.xpath('./div')
+        for movie_info in movies_info:
             item = SpidersItem()
-            item['title'] = movie_info[0].xpath('./span/text()').get()
-            item['genre'] = movie_info[1].xpath('./text()')[1].get().strip()
-            item['release_date'] = movie_info[3].xpath('./text()')[1].get().strip()
+            item['title'] = movie_info.xpath('./div[1]/span/text()').get()
+            item['genre'] = movie_info.xpath('./div[2]/text()')[1].get().strip()
+            item['release_date'] = movie_info.xpath('./div[4]/text()')[1].get().strip()
             yield item
