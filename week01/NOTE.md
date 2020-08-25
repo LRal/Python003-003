@@ -145,7 +145,7 @@ class SpidersPipeline:
 
       # 保存方式（以 with 语句为例）
       output = f'|{<info_1>}| |{<info_2>}|\n'
-      with open('./info.txt', 'a+', encoding='gbk') as article:
+      with open('./info.txt', 'a', encoding='gbk') as article:
          article.write(output)
       return item
 ```  
