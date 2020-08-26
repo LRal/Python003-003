@@ -9,6 +9,9 @@ from itemadapter import ItemAdapter
 
 
 class SpidersPipeline:
+    def open_spider(self, spider):
+        print('start spider')
+
     def process_item(self, item, spider):
         title = item['title']
         genre = item['genre']
@@ -18,3 +21,6 @@ class SpidersPipeline:
         with open('./movie_info.csv', 'a', encoding='gbk') as article:
             article.write(output)
         return item
+
+    def close_spider(self, spider):
+        print('close spider')
