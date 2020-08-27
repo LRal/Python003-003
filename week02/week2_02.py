@@ -18,7 +18,7 @@ try:
     InputPassword.send_keys('password')
 
     LoginButton = Browser.find_element_by_xpath(
-        '//*[@class="sm-button submit sc-1n784rm-0 bcuuIb"]')
+        '//*[text()="立即登录"]')
     LoginButton.click()
 
 except Exception as error:
