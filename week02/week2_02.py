@@ -1,7 +1,7 @@
 import time
 from selenium import webdriver
 
-# 主页进入登录页面 - 输入账号密码 - 登录
+# 进入登录页面 - 输入账号密码 - 登录
 try:
     Browser = webdriver.Edge()
     Browser.get('https://shimo.im')
