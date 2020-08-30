@@ -34,5 +34,3 @@ class SpidersPipeline:
     def close_spider(self, spider):
         self.cursor.close()
         self.connection.close()
-
-
