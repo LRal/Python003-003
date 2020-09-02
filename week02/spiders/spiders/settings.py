@@ -58,11 +58,6 @@ DOWNLOADER_MIDDLEWARES = {
     'spiders.middlewares.RandomHttpProxyMiddleware': 400,
 }
 
-HTTP_PROXY_LIST = [
-     'http://186.251.95.155:8080',
-     'http://212.83.157.6:5836',
-]
-
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -95,3 +90,10 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+MYSQL_HOST = 'localhost'
+MYSQL_USER = 'root'
+MYSQL_PWD = '12345678'
+MYSQL_DB = 'test_db'
+
+HTTP_PROXY_LIST = ['http://199.19.107.10:80']
