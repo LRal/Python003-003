@@ -5,7 +5,16 @@
 import os
 import numpy as np
 import pandas as pd
-os.chdir(r'C:\Users\Jimmy\Desktop')
+os.chdir(r'C:\Users\04285\Desktop\考勤')
+
+
+def convert(data, col):
+    """convert timestamp to minutes"""
+    hours = data[col].str.split(':').str[0].apply(
+        pd.to_numeric, errors='coerce')
+    mins = data[col].str.split(':').str[1].apply(
+        pd.to_numeric, errors='coerce')
+    data.loc[data[col].notnull(), col] = 60 * hours + mins
 
 
 def get_eid_attendence(eid, data):
@@ -16,41 +25,54 @@ def get_eid_attendence(eid, data):
     a_m, p_m, overtime = [['' for _ in range(days + 3)] for _ in range(3)]
     a_m[0], p_m[0], overtime[0] = '上午', '下午', '加班工时'
 
-    def fill(keyword, str1, str2):
-        def choose_to_fill():
-            if str1 == '':
-                p_m[date] = str2
-            elif str2 == '':
-                a_m[date] = str1
-            else:
-                a_m[date], p_m[date] = str1, str2
-
-        for date in range(1, days + 1):
-            for col in eid_info.columns[eid_info.columns.str.contains(keyword)]:
-                if eid_info[col].notnull()[date - 1]:
-                    choose_to_fill()
-
-
     # 正常出勤
-    fill('上班1', '√', '')
-    fill('下班1', '', '√')
+    for date in range(1, days + 1):
+        for col in eid_info.columns[eid_info.columns.str.contains('上班1')]:
+            if eid_info[col].notnull()[date - 1]:
+                a_m[date] = '√'
+    for date in range(1, days + 1):
+        for col in eid_info.columns[eid_info.columns.str.contains('下班1')]:
+            if eid_info[col].notnull()[date - 1]:
+                p_m[date] = '√'
+
+    # 迟到/早退
+    for date in range(1, days + 1):
+        if eid_info.loc[date - 1, '上班1'] > 495:
+            a_m[date] = '迟到'
+        if eid_info.loc[date - 1, '下班1'] < 1065:
+            p_m[date] = '早退'
 
     # 出差(假设出差出一整天，不考虑上下午)
-    fill('出差', '出', '差')
+    for date in range(1, days + 1):
+        for col in eid_info.columns[eid_info.columns.str.contains('出差')]:
+            if eid_info[col].notnull()[date - 1]:
+                a_m[date], p_m[date] = '出', '差'
 
     # 年假
-    fill('年休假', '年', '假')
+    for date in range(1, days + 1):
+        for col in eid_info.columns[eid_info.columns.str.contains('年休假')]:
+            if eid_info[col].notnull()[date - 1]:
+                a_m[date], p_m[date] = '年', '假'
 
     # 调休
-    fill('调休', '调', '休')
+    for date in range(1, days + 1):
+        for col in eid_info.columns[eid_info.columns.str.contains('调休')]:
+            if eid_info[col].notnull()[date - 1]:
+                a_m[date], p_m[date] = '调', '休'
 
     # 正常休息
-    # fill('应出勤', '休', '息')
     for date in range(1, days + 1):
         if eid_info['应出勤时数'][date - 1] == 0:
-            a_m[date] = '休'
-            p_m[date] = '息'
+            a_m[date], p_m[date] = '休', '息'
 
+    # 加班
+    for date in range(1, days + 1):
+        if eid_info['应出勤时数'][date - 1] == 0 and eid_info['上班1'].notnull()[date - 1]:
+            a_m[date] = '√'
+        if eid_info['应出勤时数'][date - 1] == 0 and eid_info['下班1'].notnull()[date - 1]:
+            p_m[date] = '√'
+
+    # 整合数据
     eid_attendence = pd.DataFrame(
         [a_m, p_m, overtime],
         index=[eid for _ in range(3)],
@@ -85,6 +107,10 @@ rawdata = pd.read_excel(
     header=6,
     converters={'工号': str, '考勤日期': np.datetime64}
 )
+
+
+convert(rawdata, '上班1')
+convert(rawdata, '下班1')
 
 info = get_all_attendence(EIDs, rawdata)
 
