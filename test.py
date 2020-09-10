@@ -5,7 +5,7 @@
 import os
 import numpy as np
 import pandas as pd
-os.chdir(r'C:\Users\04285\Desktop\考勤')
+os.chdir(r'C:\Users\04895\Desktop')
 
 
 def convert(data, col):
@@ -68,9 +68,9 @@ def get_eid_attendence(eid, data):
     # 加班
     for date in range(1, days + 1):
         if eid_info['应出勤时数'][date - 1] == 0 and eid_info['上班1'].notnull()[date - 1]:
-            a_m[date] = '√'
+            a_m[date], p_m[date] = '√', '休息'
         if eid_info['应出勤时数'][date - 1] == 0 and eid_info['下班1'].notnull()[date - 1]:
-            p_m[date] = '√'
+            a_m[date], p_m[date] = '休息', '√'
 
     # 整合数据
     eid_attendence = pd.DataFrame(
