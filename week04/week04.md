@@ -39,7 +39,7 @@
 7. `SELECT * FROM table1 t1 INNER JOIN table2 t2 ON t1.id = t2.id;`
 
     ```python
-    pd.merge(table1, table2, on='id', how='inner')
+    pd.merge(table1, table2, on='id')
     ```
 
 8. `SELECT * FROM table1 UNION SELECT * FROM table2;`
