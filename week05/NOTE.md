@@ -377,7 +377,7 @@ Person.objects.filter(first_name='Yan').delete()  # 删除单条数据
 Person.objects.all().delete()  # 删除全部数据
 ```
 
-> 更多方法，参考[官方文档](https://docs.djangoproject.com/en/3.1/topics/db/queries/#retrieving-objects)
+> 更多方法，参考[官方文档](https://docs.djangoproject.com/en/3.1/ref/models/querysets/)
 
 ## 模板层（Templates）
 
