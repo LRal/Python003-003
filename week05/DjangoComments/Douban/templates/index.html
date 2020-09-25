@@ -27,7 +27,7 @@
         </form>
     </nav>
     <div class="container">
-        <h3 class="mt-5 mb-3">电影名称：阿甘正传</h3>
+        <h3 class="mt-5 mb-3">电影名称：信条</h3>
         <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -38,12 +38,12 @@
                 </tr>
             </thead>
             <tbody>
-                {% for movie in data %}
+                {% for tenet in tenet_data %}
                     <tr>
-                        <th>{{ movie.id }}</th>
-                        <td>{{ movie.review }}</td>
-                        <td>{{ movie.n_star }}</td>
-                        <td class="text-nowrap">{{  movie.sentiment }}</td>
+                        <th>{{ tenet.id }}</th>
+                        <td>{{ tenet.short_comment }}</td>
+                        <td>{{ tenet.star_rating }}</td>
+                        <td class="text-nowrap">{{  tenet.comment_time }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

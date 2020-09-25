@@ -8,12 +8,11 @@
 from django.db import models
 
 
-class MovieReviews(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    n_star = models.IntegerField()
-    review = models.CharField(max_length=400)
-    sentiment = models.FloatField()
+class TenetReviews(models.Model):
+    short_comment = models.CharField(max_length=500)
+    star_rating = models.PositiveIntegerField()
+    comment_time = models.DateTimeField()
 
     class Meta:
         managed = False
-        db_table = 'movie_reviews'
+        db_table = 'tenet_reviews'

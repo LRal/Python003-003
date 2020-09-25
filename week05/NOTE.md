@@ -18,13 +18,13 @@
 
 ### 创建项目
 
-`django-admin startproject <projectname>`
+`django-admin startproject <project>`
 
 ### 启动与关闭
 
 首先要 cd 到项目目录下：
 
-`cd <projectname>`
+`cd <project>`
 
 #### 启动服务器
 
@@ -43,14 +43,14 @@
 
 ### 创建 app
 
-`django-admin startapp <appname>`  
+`django-admin startapp <app>`  
 
 App和项目的关系:一个项目是一个特定站点配置和App的集合;一个项目可以包含多个App,一个App可以存在于多个项目。
 
 ### 将 app 注册到 Django 中
 
 ```python
-# <projectname> 下的 settings.py
+# <project> 下的 settings.py
 INSTALLED_APPS = [
     'django.contrib.admin',  # 内置的后台管理系统
     'django.contrib.auth',  # 内置的用户认证系统
@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',  # 会话，表示当前访问网站的用户身份
     'django.contrib.messages',  # 消息提示
     'django.contrib.staticfiles',  # 静态资源路径
-    '<appname>',  # 创建的 app
+    '<app>',  # 创建的 app
 ]
 ```
 
@@ -67,7 +67,7 @@ INSTALLED_APPS = [
 ### 配置数据库信息
 
 ```python
-# <projectname> 下的 settings.py
+# <project> 下的 settings.py
 
 DATABASES = {
     'default': {
@@ -83,7 +83,7 @@ DATABASES = {
 ### 配置 Django 中数据库驱动
 
 ```python
-# <projectname> 下的 __init__.py
+# <project> 下的 __init__.py
 
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -114,7 +114,7 @@ URLconf，也称 URL 调度器、路由层，是命名为 urls.py 的文件。
 
 ### 项目下的 URLconf
 
-<projectname\> 下的 urls.py。
+<project\> 下的 urls.py。
 
 ```python
 from django.contrib import admin
@@ -122,7 +122,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('<appname>.urls')),  # 使用 include() 引用其他 app 下的 URLconf
+    path('<app>/', include('<app>.urls')),  # 使用 include() 引用其他 app 下的 URLconf
 ]
 ```
 
@@ -142,7 +142,7 @@ path(route, view, kwargs=None, name=None)
 
 ### app 下的 URLconf
 
-默认情况下，<appname\> 下是没有 urls.py 的。
+默认情况下，<app\> 下是没有 urls.py 的。
 如果项目非常庞大，app 非常多，应用的 URL 都写在根 urls.py 配置文件中的话，会显的非常杂乱，还会出现名称冲突之类的问题。
 因此我们一般会为每个 app 创建它们各自的 urls.py 配置文件，然后在根 urls.py 里用 include() 函数引用。
 
@@ -151,22 +151,22 @@ path(route, view, kwargs=None, name=None)
 如果匹配到某个 URL 模式，URL 调度器会调用视图层的函数。
 
 ```python
-# <appname\> 下的 urls.py
+# <app\> 下的 urls.py
 
 from django.urls import path
 from . import views  # 调用 app 的视图层 (views.py)
 
 urlpatterns = [
-    path('', views.index)  # 如果匹配到 URL 模式，则调用视图层里的 index() 函数
+    path('<route>', views.<index>)  # 如果匹配到 URL 模式，则调用视图层里的 index() 函数
 ]
 ```
 
 ```python
-# <appname\> 下的 views.py
+# <app\> 下的 views.py
 
 from django.http import HttpResponse  # HttpResponse 是一种响应类型，后面会细讲
 
-def index(request):  # 视图层里的 index() 函数
+def <index>(request):  # 视图层里的 index() 函数
     return HttpResponse("Hello Django!")
 
 # 视图层里的函数都要带 request 对象
@@ -211,7 +211,7 @@ re_path('(?P<year>[0-9]{4}).html', views.func, name='urlyear')  # 如 http://127
 
 ```python
 # 第一步：在 converters.py 中写转换类
-# <appname> 下的 converters.py （需自己创建）
+# <app> 下的 converters.py （需自己创建）
 class FourDigitYearConverter:
     regex = '[0-9]{4}'
 
@@ -224,7 +224,7 @@ class FourDigitYearConverter:
 
 ```python
 # 第二步：在 urls.py 中使用 register_converter 调用转换类，并声明数据类型，就可以使用 path() 解析了
-# <appname> 下的 urls.py
+# <app> 下的 urls.py
 from django.urls import register_converter
 register_converter(converters.FourDigitYearConverter, 'yyyy')
 urlpatterns = [
@@ -234,7 +234,7 @@ urlpatterns = [
 
 ```python
 # 第三步：在 views.py 中写对应的函数
-# <appname> 下的 views.py
+# <app> 下的 views.py
 def year(request, year):
     return HttpResponse(year)
 ```
@@ -265,12 +265,12 @@ from django.shortcuts import render, redirect
 def func(request):
     """
     render() 通常用于需要模板的地方。
-    它会把给定的变量传给 <appname>/templates 下的模板，并返回一个 HttpResponse 对象。
+    它会把给定的变量传给 <app>/templates 下的模板，并返回一个 HttpResponse 对象。
     """
     var1 = '一个会在模板里用到的变量'
     var2 = '另一个也会在模板里用到的变量'
     return render(request, 'templates.html', locals())
-# 这里的 templates.html 是模板，位于 <appname>/templates 下（需自己创建文件夹）。
+# 这里的 templates.html 是模板，位于 <app>/templates 下（需自己创建文件夹）。
 # locals() 函数会以字典类型返回当前位置的所有局部变量，在这里指的是 var1, var2。
 
 def year(request, year):
@@ -342,7 +342,7 @@ CREATE TABLE person (
 ORM 是这样的：
 
 ```python
-# <appname> 下的 models.py
+# <app> 下的 models.py
 
 from django.db import models
 
@@ -355,7 +355,7 @@ class Person(models.Model):  # 每个类都继承 models 模块的 Model 类
 ### CRUD
 
 ```python
-# 虽然属于模型层，但增删查改一般写在 <appname> 下的视图层（views.py）
+# 虽然属于模型层，但增删查改一般写在 <app> 下的视图层（views.py）
 # 以刚才创建的 Person 数据表为例
 
 from index.models import *
@@ -379,7 +379,9 @@ Person.objects.all().delete()  # 删除全部数据
 
 > 更多方法，参考[官方文档](https://docs.djangoproject.com/en/3.1/topics/db/queries/#retrieving-objects)
 
-## 模板层（templates）
+## 模板层（Templates）
+
+Django 有自己的一套 html 语言，可应用在 Templates 文件夹的 html 文件中。
 
 ### 常用语法
 
@@ -399,7 +401,7 @@ Person.objects.all().delete()  # 删除全部数据
 
 ### 结合模板进行开发
 
-1. 下载模板文件，放到 <appname\>/static 目录下
+1. 下载模板文件，放到 <app\>/static 目录下
 2. 在 html 模板中 head 标签里加入下列语句，引入下载的 css, js 文件：
 
     ```js
@@ -422,16 +424,16 @@ Person.objects.all().delete()  # 删除全部数据
 1. 经过 ORM 进行 CRUD 操作后，把 QuerySet 对象传进 html 模板中：
 
     ```python
-    # <appname> 下的 views.py
+    # <app> 下的 views.py
     def movie_reviews(request):
-        data = MovieReviews.objects.filter(n_star__gt=3)
+        movie_data = MovieReviews.objects.filter(n_star__gt=3)
         return render(request, 'index.html', locals())
     ```
 
 2. 利用 {{ var }} 和 for 遍历标签 将数据写入：
 
     ```js
-    {% for movie in data %}
+    {% for movie in movie_data %}
         <tr>
             <th>{{ movie.id }}</th>
             <td>{{ movie.review }}</td>
