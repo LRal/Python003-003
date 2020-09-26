@@ -38,12 +38,12 @@
                 </tr>
             </thead>
             <tbody>
-                {% for tenet in tenet_data %}
+                {% for tenet in data %}
                     <tr>
                         <th>{{ tenet.id }}</th>
                         <td>{{ tenet.short_comment }}</td>
                         <td>{{ tenet.star_rating }}</td>
-                        <td class="text-nowrap">{{  tenet.comment_time }}</td>
+                        <td class="text-nowrap">{{ tenet.comment_time }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
