@@ -30,15 +30,15 @@ class Dog(Animal):
 
 
 class Zoo:
-    def __init__(self, zoo_name):
-        self.zoo_name = zoo_name
-        self.animal_list = []
+    def __init__(self, name):
+        self.name = name
+        self.__animal_list = []
 
     def add_animal(self, animal):
         setattr(self, animal.__class__.__name__, None)
 
-        if animal.name not in self.animal_list:
-            self.animal_list.append(animal.name)
+        if animal.name not in self.__animal_list:
+            self.__animal_list.append(animal.name)
         else:
             raise Exception(f'{animal.name} has already been added.')
 
