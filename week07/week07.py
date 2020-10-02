@@ -8,8 +8,9 @@ class Animal(metaclass=ABCMeta):
         self.body_type = body_type
         self.character = character
         self.is_fierce = bool(
-            self.catagory == '食肉' and self.character == '凶猛' and
-            (self.body_type == '中等' or self.body_type == '大')
+            self.catagory == '食肉' and
+            self.body_type >= '中等' and
+            self.character == '凶猛'
         )
 
 
