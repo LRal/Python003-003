@@ -36,12 +36,11 @@ class Zoo:
         self.__animal_list = []
 
     def add_animal(self, animal):
+        setattr(self, animal.__class__.__name__, None)
         if animal.name not in self.__animal_list:
             self.__animal_list.append(animal.name)
         else:
             raise Exception(f'{animal.name} has already been added.')
-
-        setattr(self, animal.__class__.__name__, None)
 
 
 if __name__ == '__main__':
