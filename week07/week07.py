@@ -7,7 +7,10 @@ class Animal(metaclass=ABCMeta):
         self.catagory = catagory
         self.body_type = body_type
         self.character = character
-        self.is_fierce = bool(
+
+    @property
+    def is_fierce(self):
+        return bool(
             self.catagory == '食肉' and
             self.body_type >= '中等' and
             self.character == '凶猛'
@@ -18,16 +21,28 @@ class Cat(Animal):
     def __init__(self, name, catagory, body_type, character):
         super().__init__(catagory, body_type, character)
         self.name = name
-        self.sound = 'Meow'
-        self.fit_for_pet = bool(self.character != '凶猛')
+
+    @property
+    def sound(self):
+        return 'Meow'
+
+    @property
+    def fit_for_pet(self):
+        return bool(self.character != '凶猛')
 
 
 class Dog(Animal):
     def __init__(self, name, catagory, body_type, character):
         super().__init__(catagory, body_type, character)
         self.name = name
-        self.sound = 'Bark'
-        self.fit_for_pet = bool(self.character != '凶猛')
+
+    @property
+    def sound(self):
+        return 'Bark'
+
+    @property
+    def fit_for_pet(self):
+        return bool(self.character != '凶猛')
 
 
 class Zoo:
