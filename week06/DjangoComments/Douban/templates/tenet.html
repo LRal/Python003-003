@@ -47,29 +47,6 @@
                     </tr>
                 {% endfor %}
             </tbody>
-            {% comment %} <tbody>
-                {% for tenet in data %}
-                    {% if q == '' or q == null %}
-                        {% if tenet.star_rating > 3 %}
-                            <tr>
-                                <th>{{ tenet.id }}</th>
-                                <td>{{ tenet.short_comment }}</td>
-                                <td>{{ tenet.star_rating }}</td>
-                                <td>{{ tenet.comment_time }}</td>
-                            </tr>
-                        {% endif %}
-                    {% else %}}
-                        {% if q in tenet.short_comment %}
-                            <tr>
-                                <th>{{ tenet.id }}</th>
-                                <td>{{ tenet.short_comment }}</td>
-                                <td>{{ tenet.star_rating }}</td>
-                                <td>{{ tenet.comment_time }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </tbody> {% endcomment %}
         </table>
     </div>
 </body>
