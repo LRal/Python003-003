@@ -3,22 +3,10 @@
 """
 
 
-import pandas as pd
-from sqlalchemy import create_engine
 from django.shortcuts import render
-from django.conf import settings
+from django_pandas.io import read_frame
 from .models import Smartphones
-from .process import process_data
-
-
-user = settings.MYSQL_USER
-pwd = settings.MYSQL_PWD
-host = settings.MYSQL_HOST
-database = settings.MYSQL_DB
-
-engine = create_engine(
-    f'mysql+pymysql://{user}:{pwd}@{host}/{database}')
-rawdata = pd.read_sql_table('smartphones', engine, index_col='id')
+from .utils import process_data
 
 
 def index(request):
@@ -43,5 +31,7 @@ def search_date(request):
 
 
 def analysis(request):
-    data = process_data(rawdata)
+    queryset = Smartphones.objects.all()
+    dataframe = read_frame(queryset)
+    data = process_data(dataframe)
     return render(request, 'analysis.html', data)
