@@ -122,8 +122,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-MYSQL_HOST = 'localhost'
-MYSQL_USER = 'root'
-MYSQL_PWD = '666666'
-MYSQL_DB = 'test'
