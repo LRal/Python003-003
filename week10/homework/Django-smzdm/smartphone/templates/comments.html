@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% endblock %}
+
+    {% block js %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slim.min.js' %}"></script>
+    {% endblock %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>评论内容与舆情数据</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">首页</a>
+        <form class="form-inline" method="get" action="/comments/search_comment">
+            <input class="form-control mr-sm-2" name="comment_keyword" type="search" placeholder="输入任意字符">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索评论内容</button>
+        </form>
+    </nav>
+    <nav class="navbar navbar-dark bg-dark">
+        <br>
+        <form class="form-inline" method="get" action="/comments/search_date">
+            <input class="form-control mr-sm-2" name="date_keyword" type="search" placeholder="格式：yyyy-mm-dd">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索评论日期</button>
+        </form>
+    </nav>
+    <div class="container" style="text-align:center">
+        <h3 class="mt-5 mb-3">评论内容及舆情分析</h3>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">产品名称</th>
+                    <th scope="col">评论时间</th>
+                    <th scope="col">评论内容</th>
+                    <th scope="col">舆情分析</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    <tr>
+                        <th>{{ item.id }}</th>
+                        <td class="text-nowrap">{{ item.name }}</td>
+                        <td class="text-nowrap">{{ item.date }}</td>
+                        <td>{{ item.comment }}</td>
+                        <td>{{ item.stmscore }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

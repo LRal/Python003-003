@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% endblock %}
+
+    {% block js %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slim.min.js' %}"></script>
+    {% endblock %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>评论数据分析</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">首页</a>
+    </nav>
+    <div class="container" style="text-align:center">
+        <h3 class="mt-5 mb-3">评论数据分析</h3>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">产品名称</th>
+                    <th scope="col">评论数量</th>
+                    <th scope="col">正向评价数量</th>
+                    <th scope="col">正向评价比例</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for value in data %}
+                    <tr>
+                        <td class="text-nowrap">{{ value.name }}</td>
+                        <td>{{ value.total_num }}</td>
+                        <td>{{ value.positive_num }}</td>
+                        <td>{{ value.positive_pct }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
