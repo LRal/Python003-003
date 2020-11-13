@@ -1,64 +1,39 @@
 <!doctype html>
 <html>
   <head>
+    {% load static %}
+
+    <!-- Css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
+
+    <!-- Js -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-table-zh-CN.min.js' %}"></script>
+    <script src="{% static 'js/moment.min.js' %}"></script>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>评论内容与舆情分析</title>
-
-    <!-- Css -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css">
-
-    <!-- Js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-    <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <title>评论内容与舆情分析</title>    
   </head>
 
-  <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">首页</a>
-  </nav>
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">首页</a>
+    </nav>
 
-  <table
-    id="table"
-    data-search="true"
-    data-show-toggle="true"
-    data-show-fullscreen="true"
-    data-show-columns="true"
-    data-show-columns-toggle-all="true"
-    data-detail-view="true"
-    data-detail-formatter="detailFormatter"
-    data-minimum-count-columns="2"
-    data-show-pagination-switch="true"
-    data-pagination="true"
-    data-id-field="id"
-    data-page-list="[10, 25, 50, 100, all]">
-  </table>
+    <div class="container" style="text-align:center">
+      <h3 class="mt-5 mb-3">评论内容与舆情分析</h3>
+      <table id="table"></table>
+    </div>
 
-  <script>
-    var $table = $('#table')
-
-    function detailFormatter(index, row) {
-      var html = []
-      $.each(row, function (key, value) {
-        html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-      })
-      return html.join('')
-    }
-
-    function dateFormatter(value, row, index) {
-      return moment(value).format('YYYY/MM/DD')
-    }
-
-    function initTable() {
-      $table.bootstrapTable('destroy').bootstrapTable({
-        height: 550,
-        columns: [
+    <script>
+      var Columns = [
           [{
             field: 'id',
             title: 'ID',
@@ -67,8 +42,7 @@
           }, {
             field: 'name',
             title: '产品名称',
-            align: 'center',
-            sortable: true
+            align: 'center'
           }, {
             field: 'date',
             title: '日期',
@@ -78,21 +52,44 @@
           }, {
             field: 'comment',
             title: '评论内容',
-            align: 'center',
-            sortable: true
+            align: 'center'
           }, {
             field: 'stmscore',
             title: '舆情分析',
             align: 'center',
             sortable: true
           }]
-        ],
-        data: {{data|safe}}
-      })
-    }
+      ];
 
-    $(function() {
-      initTable()
-    })
-  </script>
+      function detailFormatter(index, row) {
+        var html = []
+        $.each(row, function (key, value) {
+          html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+        })
+        return html.join('')
+      };
+
+      function dateFormatter(value, row, index) {
+        return moment(value).format('YYYY/MM/DD')
+      };
+
+      $('#table').bootstrapTable({
+        height: 1000,
+        search: true,
+        showToggle: true,
+        showFullscreen: true,
+        showColumns: true,
+        showColumnsToggleAll: true,
+        detailView: true,
+        detailFormatter: detailFormatter,
+        minimumCountColumns: 2,
+        showPaginationSwitch: true,
+        pagination: true,
+        pageList: [10, 25, 50, 100, 'all'],
+        pageSize: 25,
+        columns: Columns,
+        data: {{ data|safe }}
+      })
+    </script>
+  </body>
 </html>
