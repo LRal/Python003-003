@@ -29,7 +29,7 @@ def df_to_json(df):
     """
     将 df 转化为 json 格式, 以便于渲染到模板中
     """
-    data = []
-    json_records = df.reset_index().to_json(orient='records')
+    json_records = df.to_json(orient='records')
     data = json.loads(json_records)
-    return {'data': data}
+    data = {'data': data}
+    return data
