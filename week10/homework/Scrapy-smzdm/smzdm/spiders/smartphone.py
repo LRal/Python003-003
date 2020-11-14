@@ -2,7 +2,6 @@
 爬取 smzdm.com 页面信息
 """
 
-
 import scrapy
 from scrapy.selector import Selector
 from smzdm.items import SmzdmItem
@@ -12,6 +11,7 @@ class SmartphoneSpider(scrapy.Spider):
     """
     爬取智能手机前十产品的 name, date 和 comment
     """
+
     name = 'smartphone'
     allowed_domains = ['smzdm.com']
     start_urls = [

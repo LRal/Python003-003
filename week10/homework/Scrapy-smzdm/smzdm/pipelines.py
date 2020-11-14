@@ -3,7 +3,6 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-
 import pymysql
 from snownlp import SnowNLP
 
@@ -54,14 +53,3 @@ class MySQLPipeline:
             self.connection.rollback()
         finally:
             self.cursor.close()
-
-
-class CSVPipeline:
-    def process_item(self, item, spider):
-        name = item['name']
-        comment = item['comment']
-
-        output = f'|{name}| |{comment}|\n'
-        with open('./info.txt', 'a', encoding='gbk') as article:
-            article.write(output)
-        return item

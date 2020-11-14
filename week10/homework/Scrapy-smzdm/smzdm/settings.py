@@ -7,17 +7,15 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-
 from fake_useragent import UserAgent
+
 
 BOT_NAME = 'smzdm'
 
 SPIDER_MODULES = ['smzdm.spiders']
 NEWSPIDER_MODULE = 'smzdm.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-
 USER_AGENT = UserAgent(verify_ssl=False).random
 
 # Obey robots.txt rules
@@ -69,7 +67,6 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'smzdm.pipelines.MySQLPipeline': 400,
-    'smzdm.pipelines.CSVPipeline': None,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -99,5 +96,5 @@ MYSQL_PWD = '666666'
 MYSQL_DB = 'test'
 
 HTTP_PROXY_LIST = [
-    'http://199.19.107.109:80',
+    'http://199.19.107.10:80',
 ]
