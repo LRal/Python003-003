@@ -1,0 +1,93 @@
+{% load static %}
+<html>
+    <head>
+        <!-- Css -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/all.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
+
+        <!-- Js -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-table.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-table-toolbar.js' %}"></script>
+        <script src="{% static 'js/moment.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-table-zh-CN.min.js' %}"></script>
+
+        <!-- Required tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>评论数据</title>    
+    </head>
+
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">首页</a>
+        </nav>
+
+        <div class="container" style="text-align:center">
+            <h3 class="mt-5 mb-3">评论数据</h3>
+            <table id="table"></table>
+        </div>
+
+        <script>
+            var columns = [
+                {
+                    field: 'id',
+                    title: 'ID',
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: 'name',
+                    title: '产品名称',
+                    align: 'center'
+                }, {
+                    field: 'date',
+                    title: '日期',
+                    align: 'center',
+                    sortable: true,
+                    formatter: dateFormatter
+                }, {
+                    field: 'comment',
+                    title: '评论内容',
+                    align: 'center'
+                }, {
+                    field: 'stmscore',
+                    title: '舆情数据',
+                    align: 'center',
+                    sortable: true
+                }
+            ];
+
+            function detailFormatter(index, row) {
+                var html = []
+                $.each(row, function (key, value) {
+                    html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+                })
+                return html.join('')
+            };
+
+            function dateFormatter(value, row, index) {
+                return moment(value).format('YYYY/MM/DD')
+            };
+
+            $('#table').bootstrapTable({
+                height: 1000,
+                idTable: "advancedTable",
+                search: true,
+                advancedSearch: true,
+                showColumns: true,
+                showColumnsToggleAll: true,
+                detailView: true,
+                detailFormatter: detailFormatter,
+                minimumCountColumns: 2,
+                showPaginationSwitch: true,
+                pagination: true,
+                pageList: [10, 25, 50, 100, 'all'],
+                columns: columns,
+                data: {{ data|safe }}
+            })
+        </script>
+    </body>
+</html>

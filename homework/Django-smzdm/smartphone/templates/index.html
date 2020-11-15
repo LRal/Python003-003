@@ -1,0 +1,29 @@
+{% load static %}
+<html>
+    <head>
+        <!-- Css -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+        <!-- Js -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+
+        <!-- Required tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>首页</title>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/comments">评论数据展示页</a>
+        </nav>
+
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/sentiments">舆情数据分析页</a>
+        </nav>
+
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/commentNum">评论数量线形图</a>
+        </nav>
+    </body>
+</html>
