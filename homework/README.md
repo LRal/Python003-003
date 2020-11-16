@@ -9,24 +9,26 @@
 - [x] **Django 能够正确运行，并展示采集到的数据，数据不应该有乱码、缺失等问题。**
   - Django 展示页采用与数据表相同的 utf8mb4 字符集, 能正常显示 emoji
 - [x] **在 Django 上采用图表方式展示数据分类情况。**
-  - 采用线形图展示双十一活动期间产品每日评论数量
+  - 结合 Bootstrap Table 以表格形式展示评论数据
+  - 使用 Chart.js 以线形图形式展示产品每日评论数量
 - [x] **舆情分析的结果存入到 MySQL 数据库中。**
   - 在 pipeline 中实现
 - [x] **在 Django 上采用图表方式展示舆情分析的结果。**
-  - 采用表格方式展示舆情分析结果, 包括评价总数、积极评价数量及比例, 所有数据支持排序
+  - 结合 Bootstrap Table 展示舆情分析结果, 包括评价总数、积极评价数量及比例, 所有数据支持排序
 - [x] **可以在 Web 界面根据关键字或关键词进行搜索，并能够在页面展示正确的搜索结果。**
-  - 引用高级搜索插件, 支持所有字段搜索
+  - 引入 Bootstrap Table 搜索框, 实现搜索功能
 - [x] **支持按照时间（录入时间或评论时间）进行搜索，并能够在页面展示正确的搜索结果。**
-  - 表格引用高级搜索插件, 支持所有字段搜索; 线型图与毕业项目参考示例一致
+  - 表格引入高级搜索插件, 支持所有字段搜索
+  - 线型图与毕业项目参考示例大致一样
 - [ ] **符合 PEP8 代码规范，函数、模块之间的调用高内聚低耦合，具有良好的扩展性和可读性。**
-  - 待审核
+  - 使用 pylint, autopep8 辅助检查代码, 代码质量待老师检查。
 
 ## 部分截图
 
-![评论数据][comments]  
-![舆情分析][sentiments]  
+![评论数据][comments]
 ![评论数量][chart]  
+![舆情分析][sentiments]
 
-[comments]: https://github.com/LRal/Pics/blob/master/%E8%88%86%E6%83%85%E5%88%86%E6%9E%90.png?raw=true
-[sentiments]: https://github.com/LRal/Pics/blob/master/%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE.png?raw=true
+[comments]: https://github.com/LRal/Pics/blob/master/%E8%AF%84%E8%AE%BA%E6%95%B0%E6%8D%AE.png?raw=true
 [chart]: https://github.com/LRal/Pics/blob/master/%E8%AF%84%E8%AE%BA%E6%95%B0%E9%87%8F.png?raw=true
+[sentiments]: https://github.com/LRal/Pics/blob/master/%E8%88%86%E6%83%85%E5%88%86%E6%9E%90.png?raw=true

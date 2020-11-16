@@ -63,7 +63,7 @@ def get_chart_params(df):
     ).fillna(0)['comment'])
 
     comment_num_list = [
-        comment_count[i*len(date_list):(i + 1)*len(date_list)]
+        comment_count[i * len(date_list): (i + 1) * len(date_list)]
         for i in range(len(name_list))
     ]
 
